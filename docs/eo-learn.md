@@ -6,7 +6,7 @@
 ## eo-learn
 
 I guess I have a thing for keeping up with the newest libraries and repositiories for manipumating data from more and more data intensive sources. 
-Of course, I wouldn`t have had introduce you to them unless they aide and facilitate the application of machine learning to solve problems and find innovative solutions:
+Of course, I wouldn't have had introduce you to them unless they aide and facilitate the application of machine learning to solve problems and find innovative solutions:
   - efficiently handle big data      - handle different data sources and formats     - complete workflows
   - handle spatio-temporal data      - prototype, build and automate                 - deal with lack of training labels
   - create and validate machine learning applications                                - deal with missing data
@@ -31,26 +31,127 @@ In this post will have a look at the basics of using eo-learn and give it a go t
 
 #### Data Extraction
 
-You`ll find details of how to get your area of interest AOI coordinates in my previous: [Satellite Imagery Analysis with Python I](https://danielmoraite.github.io/docs/satellite1.html) post.
-Make sure you save the coordinates in a file.geojson in the ../eo-learn-master/example_data/.
+You'll find details of how to get your area of interest AOI coordinates in my previous: [Satellite Imagery Analysis with Python I](https://danielmoraite.github.io/docs/satellite1.html) post. Just make sure you select from the menu: 'meta', respectively 'add bboxes'. 
 
-        # I have picked an area around my home town, agricultural area. 
-          You might play with the time frame as well. 
+Define ROI BBOX and time interval  
+I have picked an area around my home town, a beautiful agricultural area around Danube River. 
 
+    roi_bbox = BBox(bbox=[27.67, 44.97, 28.03, 45.26], crs=CRS.WGS84)
+    time_interval = ('2019-04-01', '2019-05-01')
+
+Request different types of layers and data sources to an eopatch
+
+      layer = 'BANDS-S2-L1C'
+      input_task = S2L1CWCSInput(layer=layer, 
+                                 resx='20m', resy='20m', 
+                                 maxcc=.3, time_difference=datetime.timedelta(hours=2))
+      add_ndvi = S2L1CWCSInput(layer='NDVI')
+      add_dem = DEMWCSInput(layer='DEM')
+      add_l2a = S2L2AWCSInput(layer='BANDS-S2-L2A')
+      add_sen2cor = AddSen2CorClassificationFeature('SCL', layer='BANDS-S2-L2A')
+      save = SaveToDisk('io_example', overwrite_permission=2, compress_level=1)
+      
+Sentinel2 L1C and L2A bands are requested (all of them 12-13bands) at 20m resolution, maxcc= max cloud coverage(you can play with it in between 0.8 and 0.05), and NDVI, DEM digital elevation model. 
+
+Run workflow       
         
-       
+      workflow = LinearWorkflow(input_task, add_ndvi, add_l2a, add_sen2cor, add_dem, save)
+      result = workflow.execute({input_task: {'bbox': roi_bbox, 'time_interval': time_interval},
+                           save: {'eopatch_folder': 'eopatch'}})
         
-       
+ Check contents of eopatch
+ 
+        eopatch = result[save]
+        eopatch
         
+      EOPatch(
+        data: {
+          BANDS-S2-L1C: numpy.ndarray(shape=(5, 1613, 1413, 13), dtype=float32)
+          BANDS-S2-L2A: numpy.ndarray(shape=(5, 1613, 1413, 12), dtype=float32)
+          NDVI: numpy.ndarray(shape=(5, 1613, 1413, 1), dtype=float32)
+        }
+        mask: {
+          IS_DATA: numpy.ndarray(shape=(5, 1613, 1413, 1), dtype=bool)
+          SCL: numpy.ndarray(shape=(5, 1613, 1413, 1), dtype=int32)
+        }
+        scalar: {}
+        label: {}
+        vector: {}
+        data_timeless: {
+          DEM: numpy.ndarray(shape=(1613, 1413, 1), dtype=float32)
+        }
+        mask_timeless: {}
+        scalar_timeless: {}
+        label_timeless: {}
+        vector_timeless: {}
+        meta_info: {
+          maxcc: 0.3
+          service_type: 'wcs'
+          size_x: '20m'
+          size_y: '20m'
+          time_difference: datetime.timedelta(0, 7200)
+          time_interval: ('2019-04-01', '2019-05-01')
+        }
+        bbox: BBox(((27.67, 44.97), (28.03, 45.26)), crs=EPSG:4326)
+        timestamp: [datetime.datetime(2019, 4, 1, 9, 18, 16), ..., datetime.datetime(2019, 4, 28, 9, 8, 8)], length=5
+      )
+        
+### Plot results
 
+#### S2 L1C RGB bands
 
-And check you download folder. 
+    plt.figure(figsize=(10,10))
+    plt.imshow(eopatch.data['BANDS-S2-L1C'][3][..., [3,2,1]] * 2.5, vmin=0, vmax=1);
+![# Welcome to my adventure](/images/BR1 S2L1C RGB bands.png)
+
+#### NDVI dervied from S2 L1C bands
+
+    plt.figure(figsize=(10,10))
+    plt.imshow(eopatch.data['NDVI'][3].squeeze());
+![# Welcome to my adventure](/images/BR2 NDVI dervied from S2 L1C bands.png)
+
+##### S2 L2A RGB bands
+
+    plt.figure(figsize=(10,10))
+    plt.imshow(eopatch.data['BANDS-S2-L2A'][3][...,[3,2,1]] * 2.5, vmin=0, vmax=1);
+![# Welcome to my adventure](/images/BR3 S2L2A RGB bands.png)
+
+#### Sen2cor scene classification mask
+
+    plt.figure(figsize=(10,10))
+    plt.imshow(eopatch.mask['SCL'][3].squeeze());
+![# Welcome to my adventure](/images/BR4 Sen2cor scene classification mask.png)    
+
+#### Mapzen Digital Elevation Model
+
+    plt.figure(figsize=(10, 10))
+    plt.imshow(eopatch.data_timeless['DEM'].squeeze());
+![# Welcome to my adventure](BR5 Mapzen Digital Elevation Model.png)
+
+#### Load in saved eopatch
+    load = LoadFromDisk('io_example')
+    new_eopatch = load.execute(eopatch_folder='eopatch')
+
+--------------------------
+Thoughts: if you compare my first [article](https://danielmoraite.github.io/docs/satellite1.html) on extracting data from a satellite, and then calculate the NDVI and so on.. you'll find that eo-learn can actually help you save tons of time, skipping through a few nerv racking procedures. Plus you got all the eopatches saves for further processing with machine learning. Well done! 
+
 _________________________
 
 Please find the entire code [here](https://github.com/DanielMoraite/DanielMoraite.github.io/blob/master/assets/Downloading%20from%20Planet-Copy1.ipynb)
-All you'll have to do is pick you own coordinates, instead of spending hour figuring the above. 
 
-> 
+Feel free to pick you own coordinates. You might play with the time frame as well..
+
+I have picked an area around my home town, a beautiful agricultural area around Danube River. 
+
+    roi_bbox = BBox(bbox=[27.67, 44.97, 28.03, 45.26], crs=CRS.WGS84)
+    time_interval = ('2019-04-01', '2019-05-01')
+
+
+
+
+
+
+
 _________________________
 #### Resources:
 
