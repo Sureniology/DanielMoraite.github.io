@@ -13,25 +13,24 @@ Of course, I wouldn't have had introduce you to them unless they aide and facili
 
 Today, I would like to introduce you to an upcoming amazing library: eo-learn. 
 
-eo-learn not only makes extraction of valuable information from satellite imagery easy, is has as well a very high goal: to democratise Earth observation big data.
+`eo-learn` not only makes extraction of valuable information from satellite imagery easy, is has as well a very high goal: to democratise Earth observation big data.
 It started as a response to the availability of open Earth observation (EO) data through the Copernicus and Landsat programs. 
 And to quote:
-- is a collection of open source Python packages that have been developed to seamlessly access and process spatio-temporal image sequences acquired by any satellite fleet in a timely and automatic manner.
-- eo-learn library acts as a bridge between Earth observation/Remote sensing field and Python ecosystem for data science and machine learning.
+> is a collection of open source Python packages that have been developed to seamlessly access and process spatio-temporal image sequences acquired by any satellite fleet in a timely and automatic manner.
+> eo-learn library acts as a bridge between Earth observation/Remote sensing field and Python ecosystem for data science and machine learning.
 
 -------------------
 In this post will have a look at the basics of using eo-learn and give it a go to downloading, saving and visualizing EO imaging data(RGB, NDVI, Scene Classification masks, digital elevation).
 
 
 ### Setup 
-    - install Sentinel Hub 
-    - install eo-learn
-    - would recommend copying the github repository on your drive
+   - install Sentinel Hub 
+   - install eo-learn
 (please find bellow, under resources, the links for the above)
 
 #### Data Extraction
 
-You'll find details of how to get your area of interest AOI coordinates in my previous: [Satellite Imagery Analysis with Python I](https://danielmoraite.github.io/docs/satellite1.html) post. Just make sure you select from the menu: 'meta', respectively 'add bboxes'. 
+You'll find details of how to get your area of interest `AOI` coordinates in my previous: [Satellite Imagery Analysis with Python I](https://danielmoraite.github.io/docs/satellite1.html) post. Just make sure you select from the menu: `meta`, respectively `add bboxes`. 
 
 Define ROI BBOX and time interval  
 I have picked an area around my home town, a beautiful agricultural area around Danube River. 
@@ -102,13 +101,13 @@ Run workflow
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.data['BANDS-S2-L1C'][3][..., [3,2,1]] * 2.5, vmin=0, vmax=1);
-![# Welcome to my adventure](/images/BR1_S2L1C_RGB_bands.png)
+![# Welcome to my adventure](/images/BR1S2L1CRGBbands.png)
 
 #### NDVI dervied from S2 L1C bands
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.data['NDVI'][3].squeeze());
-![# Welcome to my adventure](/images/BR2_NDVI_dervied_from_S2_L1C_bands.png)
+![# Welcome to my adventure](/images/BR2NDVIderviedfromS2L1Cbands.png)
 
 ##### S2 L2A RGB bands
 
@@ -126,7 +125,7 @@ Run workflow
 
     plt.figure(figsize=(10, 10))
     plt.imshow(eopatch.data_timeless['DEM'].squeeze());
-![# Welcome to my adventure](BR5_Mapzen_Digital_Elevation_Model.png)
+![# Welcome to my adventure](BR5MapzenDigitalElevationModel.png)
 
 #### Load in saved eopatch
     load = LoadFromDisk('io_example')
@@ -146,10 +145,11 @@ _________________________
 
   - [documentation for eo-learn](https://eo-learn.readthedocs.io/en/latest/index.html)
   - [eo-learn github](https://github.com/sentinel-hub/eo-learn)
+  - would recommend copying the eo-learn github repository on your drive
   - [sentinelhub create account](https://services.sentinel-hub.com/oauth/subscription?param_redirect_uri=https://apps.sentinel-hub.com/dashboard/oauthCallback.html&param_state=%2Fconfigurations&param_scope=SH&param_client_id=30cf1d69-af7e-4f3a-997d-0643d660a478&origin=)
   - [sentinelhub instance ID](https://www.sentinel-hub.com/faq/where-get-instance-id)
   - [sentinelhub install](https://pypi.org/project/sentinelhub/)
-
+  
 _________________________
 ##### Notes:
 
