@@ -125,7 +125,7 @@ Run workflow
 
     plt.figure(figsize=(10, 10))
     plt.imshow(eopatch.data_timeless['DEM'].squeeze());
-![# Welcome to my adventure](BR5MapzenDigitalElevationModel.png)
+![# Welcome to my adventure](/images/BR5MapzenDigitalElevationModel.png)
 
 #### Load in saved eopatch
     load = LoadFromDisk('io_example')
