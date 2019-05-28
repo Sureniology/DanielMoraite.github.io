@@ -146,8 +146,10 @@ _________________________
 
   - [documentation for eo-learn](https://eo-learn.readthedocs.io/en/latest/index.html)
   - [eo-learn github](https://github.com/sentinel-hub/eo-learn)
-  - [sentinelhub specifications](https://www.sentinel-hub.com/faq/where-get-instance-id)
-        
+  - [sentinelhub create account](https://services.sentinel-hub.com/oauth/subscription?param_redirect_uri=https://apps.sentinel-hub.com/dashboard/oauthCallback.html&param_state=%2Fconfigurations&param_scope=SH&param_client_id=30cf1d69-af7e-4f3a-997d-0643d660a478&origin=)
+  - [sentinelhub instance ID](https://www.sentinel-hub.com/faq/where-get-instance-id)
+  - [sentinelhub install](https://pypi.org/project/sentinelhub/)
+
 _________________________
 ##### Notes:
 
