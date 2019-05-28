@@ -1,6 +1,6 @@
-![# Welcome to my adventure](/images/sat3.jpeg)
+![# Welcome to my adventure](/images/Sat1.jpg)
 
-# Satellite Imagery Analysis with Python II
+# Satellite Imagery Analysis with Python. II
 
 
 ## eo-learn
@@ -102,31 +102,31 @@ Run workflow
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.data['BANDS-S2-L1C'][3][..., [3,2,1]] * 2.5, vmin=0, vmax=1);
-![# Welcome to my adventure](/images/BR1 S2L1C RGB bands.png)
+![# Welcome to my adventure](/images/BR1_S2L1C_RGB_bands.png)
 
 #### NDVI dervied from S2 L1C bands
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.data['NDVI'][3].squeeze());
-![# Welcome to my adventure](/images/BR2 NDVI dervied from S2 L1C bands.png)
+![# Welcome to my adventure](/images/BR2_NDVI_dervied_from_S2_L1C_bands.png)
 
 ##### S2 L2A RGB bands
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.data['BANDS-S2-L2A'][3][...,[3,2,1]] * 2.5, vmin=0, vmax=1);
-![# Welcome to my adventure](/images/BR3 S2L2A RGB bands.png)
+![# Welcome to my adventure](/images/BR3_S2L2A_RGB_bands.png)
 
 #### Sen2cor scene classification mask
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.mask['SCL'][3].squeeze());
-![# Welcome to my adventure](/images/BR4 Sen2cor scene classification mask.png)    
+![# Welcome to my adventure](/images/BR4_Sen2cor_scene_classification_mask.png)    
 
 #### Mapzen Digital Elevation Model
 
     plt.figure(figsize=(10, 10))
     plt.imshow(eopatch.data_timeless['DEM'].squeeze());
-![# Welcome to my adventure](BR5 Mapzen Digital Elevation Model.png)
+![# Welcome to my adventure](BR5_Mapzen_Digital_Elevation_Model.png)
 
 #### Load in saved eopatch
     load = LoadFromDisk('io_example')
@@ -137,20 +137,9 @@ Thoughts: if you compare my first [article](https://danielmoraite.github.io/docs
 
 _________________________
 
-Please find the entire code [here](https://github.com/DanielMoraite/DanielMoraite.github.io/blob/master/assets/Downloading%20from%20Planet-Copy1.ipynb)
+Please find the entire code [here](https://github.com/DanielMoraite/DanielMoraite.github.io/blob/master/assets/forblogBR.ipynb)
 
 Feel free to pick you own coordinates. You might play with the time frame as well..
-
-I have picked an area around my home town, a beautiful agricultural area around Danube River. 
-
-    roi_bbox = BBox(bbox=[27.67, 44.97, 28.03, 45.26], crs=CRS.WGS84)
-    time_interval = ('2019-04-01', '2019-05-01')
-
-
-
-
-
-
 
 _________________________
 #### Resources:
@@ -158,16 +147,11 @@ _________________________
   - [documentation for eo-learn](https://eo-learn.readthedocs.io/en/latest/index.html)
   - [eo-learn github](https://github.com/sentinel-hub/eo-learn)
   - [sentinelhub specifications](https://www.sentinel-hub.com/faq/where-get-instance-id)
-  - 
         
-
 _________________________
-##### Data Trouble Shooting (hopefully you won't need it):
+##### Notes:
 
-- [Download quota for Open California dataset?](https://gis.stackexchange.com/questions/238803/download-quota-for-open-california-dataset)
-- [Why am I unable to activate certain Planet Labs images through the Python API?](https://gis.stackexchange.com/questions/217716/why-am-i-unable-to-activate-certain-planet-labs-images-through-the-python-api/217787) in case you are picking areas from the allowed region of California and still get the innactive feedback. 
-        
-        # API Key (instance id) stored as an env variable(if you want to call it from your notebook):        
+    # SentinelHub API Key (instance id) stored as an env variable(if you want to call it from your notebook):        
         import os
         os.environ['INSTANCE_ID']='your instance ID'
         INSTANCE_ID = os.environ.get('INSTANCE_ID')
@@ -177,22 +161,5 @@ _________________________
 HAVE FUN!
 
 -------------------------
-
-
-# Exploring the Satellite Imagery: 
-
-## PART II
-
-Time to use python’s Rasterio library since satellite images are grids of pixel-values and can be interpreted as multidimensional arrays.
-
-![# Welcome to my adventure](/images/Cali31.png)
-
-This can be a very useful practice for data preparation for machine & deep learning approached doan the road, including the NDVI which can add to object classification for vegetation (trees, parks, etc.).
-
-Hope you are enjoying it! 
-
-----------------------
-----------------------
-
-
+_________________________
 
