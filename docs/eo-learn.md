@@ -114,13 +114,13 @@ Run workflow
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.data['BANDS-S2-L2A'][3][...,[3,2,1]] * 2.5, vmin=0, vmax=1);
-![# Welcome to my adventure](/images/BR3_S2L2A_RGB_bands.png)
+![# Welcome to my adventure](/images/BR3S2L2ARGBbands.png)
 
 #### Sen2cor scene classification mask
 
     plt.figure(figsize=(10,10))
     plt.imshow(eopatch.mask['SCL'][3].squeeze());
-![# Welcome to my adventure](/images/BR4_Sen2cor_scene_classification_mask.png)    
+![# Welcome to my adventure](/images/BR4Sen2corsceneclassificationmask.png)    
 
 #### Mapzen Digital Elevation Model
 
