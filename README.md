@@ -50,6 +50,9 @@ We have always looked at the stars to discover who we are.
 * [A study of vegetation cover](docs/satellite2.md)
 > Normalized Difference Vegetation Index (NDVI)...
 
+* [Green is the favorite color](docs/eolearntreecover.md)
+> Deep learning network to predict tree cover...
+
 * [Orbiting the planet](docs/Satellite3NNKeras.md)
 > Machine learning for satellite imagery...
 
