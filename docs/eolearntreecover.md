@@ -1,8 +1,8 @@
-![# Welcome to my adventure](/images/Sat1.jpg)
+![# Welcome to my adventure](/images/satellite72.jpg)
 
 # Tree Cover Prediction with Deep Learning 
 
-## Keras, eo-learn, sentinel, satellite imagery, tensorflow
+#### Keras, eo-learn, sentinel, satellite imagery, tensorflow
 
 
 
@@ -11,7 +11,9 @@ As you've seen in my previous article: [Satellite Imagery Analysis with Python. 
 -------------------
 Today will try one of the demos on Tree Cover Prediction that shows as well how easy is to use eo-learn for machine learning/ deep learning. Exactly training a U-net deep learning network to predict tree cover.
 
-I have chosen an area of over 600sqm in UK(North-West of London). Geopedia/EU tree cover density has been used for gathering the ground-truth data.
+I have chosen an area of over 600sq.miles in UK(North-West of London). Geopedia/EU tree cover density has been used for gathering the ground-truth data.
+
+![# Welcome to my adventure](/images/TreeCover8.jpg)
 
 ___________________
 
@@ -25,7 +27,7 @@ ___________________
 #### Data Extraction
 
 You'll find details of how to get your area of interest AOI coordinates in my previous: [Satellite Imagery Analysis with Python I](https://danielmoraite.github.io/docs/satellite1.html) post.
-Make sure you save the coordinates in a file.geojson in your directory or if you have copied the github repo: ../eo-learn-master/example_data/.
+Make sure you save the coordinates in a file.geojson in your working directory or if you have copied the github repo: ../eo-learn-master/example_data/.
 
  global image request parameters
  
@@ -126,7 +128,7 @@ task to save to disk
 
 #### Test workflow on an example patch and display
 
-    idx = 168
+    idx = 168  # feel free to check other idx`s 
     example_patch = execute_workflow(idx)  
     example_patch
 
@@ -210,16 +212,16 @@ task to save to disk
 
 
  Model setup
- from https://www.kaggle.com/lyakaap/weighing-boundary-pixels-loss-script-by-keras2
- weight: weighted tensor(same shape with mask image)
+  from [weighing boundary pixels loss script by keras2](https://www.kaggle.com/lyakaap/weighing-boundary-pixels-loss-script-by-keras2)
+  weight: weighted tensor(same shape with mask image)
  
-def weighted_bce_loss(y_true, y_pred, weight):
-    # avoiding overflow
-    epsilon = 1e-7
-    y_pred = K.clip(y_pred, epsilon, 1. - epsilon)
-    logit_y_pred = K.log(y_pred / (1. - y_pred))
+    def weighted_bce_loss(y_true, y_pred, weight):
+        # avoiding overflow
+        epsilon = 1e-7
+        y_pred = K.clip(y_pred, epsilon, 1. - epsilon)
+        logit_y_pred = K.log(y_pred / (1. - y_pred))
 
- [check: weighted_cross_entropy_with_logits](https://www.tensorflow.org/api_docs/python/tf/nn/weighted_cross_entropy_with_logits
+ [check: weighted_cross_entropy_with_logits](https://www.tensorflow.org/api_docs/python/tf/nn/weighted_cross_entropy_with_logits)
  
     loss = (1. - y_true) * logit_y_pred + (1. + (weight - 1.) * y_true) * \
     (K.log(1. + K.exp(-K.abs(logit_y_pred))) + K.maximum(-logit_y_pred, 0.))
@@ -325,6 +327,7 @@ def weighted_bce_loss(y_true, y_pred, weight):
 #### 5. Train the model
 
  Fit the model
+ 
     batch_size = 16
     model.fit_generator(
             train_gen.flow(x_train, y_train, batch_size=batch_size),
@@ -335,9 +338,9 @@ def weighted_bce_loss(y_true, y_pred, weight):
 
 #### 6. Validate model and show some results
 
- plot one example (image, label, prediction)
+  plot one example (image, label, prediction)
  
-    idx = 4
+    idx = 4  #feel free to check different idx`s as you can see I`ve done in the photos bellow.
     p = np.argmax(model.predict(np.array([x_train[idx]])), axis=3)
     fig = plt.figure(figsize=(12,4))
     ax1 = fig.add_subplot(1,3,1)
@@ -374,12 +377,11 @@ def weighted_bce_loss(y_true, y_pred, weight):
                                   predictions.reshape(len(predictions) * 256 * 256, 1))
     plot_confusion_matrix(cnf_matrix, raster_value.keys(), normalize=True)
 
-![# Welcome to my adventure](/images/BR2NDVIderviedfromS2L1Cbands.png)
+![# Welcome to my adventure](/images/TreeCover6.jpg)
 
 _________________________
 
-Please find the entire code [here](https://github.com/DanielMoraite/DanielMoraite.github.io/blob/master/assets/forblogBR.ipynb)
-
+Please find the entire code [here](https://github.com/DanielMoraite/DanielMoraite.github.io/blob/master/assets/tree-cover-keras.ipynb)
 Feel free to pick you own coordinates. You might play with the time frame as well..
 
 _________________________
@@ -404,7 +406,7 @@ _________________________
 
 
 
-HAVE FUN!
+Enjoy! 
 
 -------------------------
 _________________________
