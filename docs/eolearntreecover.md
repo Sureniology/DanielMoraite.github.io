@@ -1,4 +1,4 @@
-![# Welcome to my adventure](/images/satellite72.jpg)
+![# Welcome to my adventure](/images/satellite72.jpeg)
 
 # Tree Cover Prediction with Deep Learning 
 
