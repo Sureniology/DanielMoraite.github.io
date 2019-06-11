@@ -43,9 +43,12 @@ We have always looked at the stars to discover who we are.
 #### Earth Observation:
 -----------------
 
-* [Satellite Imagery Analysis with Python](docs/satellite1.md)
+* [Satellite Imagery Analysis with Python I](docs/satellite1.md)
 > First getting that abundant data from Planet...
 > Second exploring with python’s Rasterio library...
+
+* [A study of vegetation cover](docs/satellite2.md)
+> Normalized Difference Vegetation Index (NDVI)...
 
 * [Satellite Imagery Analysis with Python II](docs/eo-learn.md)
 > EO imaging data exploration with: eo-learn, SentinelHub...
@@ -55,9 +58,6 @@ We have always looked at the stars to discover who we are.
 
 #### Machine Learning:
 -----------------
-
-* [A study of vegetation cover](docs/satellite2.md)
-> Normalized Difference Vegetation Index (NDVI)...
 
 * [Green is the favorite color](docs/eolearntreecover.md)
 > Deep learning network to predict tree cover...
