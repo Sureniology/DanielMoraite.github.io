@@ -40,7 +40,7 @@ Space.. the final frontier. Above us, Around us, Within us.
 
 We have always looked at the stars to discover who we are.
 
-Earth Observation:
+#### Earth Observation:
 -----------------
 
 * [Satellite Imagery Analysis with Python](docs/satellite1.md)
@@ -53,7 +53,7 @@ Earth Observation:
 * [Satellite Imagery Timelapses](docs/eolearntimelapse.md)
 > Creating fun timelapses...
 
-Machine Learning:
+#### Machine Learning:
 -----------------
 
 * [A study of vegetation cover](docs/satellite2.md)
